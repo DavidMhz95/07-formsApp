@@ -42,7 +42,7 @@ export class BasicPageComponent implements OnInit {
 
     }
 
-    return 'Hola mundo'
+    return null
   }
 
   //Forma de hacer con formgroup
