@@ -1,33 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { cantBeStrider } from '../../../shared/validators/validators';
+import { ValidatorServiceService } from './../../../shared/services/validator.service';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmailValidator } from '../../../shared/validators/email.validator.service';
 
 @Component({
   templateUrl: './register-page.component.html',
   styles: ``
 })
-export class RegisterPageComponent{
+export class RegisterPageComponent  {
 
-  private fb = new FormBuilder();
+  // public myform: FormGroup
+  public myform!: FormGroup;
 
-  public myform = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    username: ['',[Validators.required, cantBeStrider]],
-    password: ['', [Validators.required, Validators.minLength(6)] ],
-    password2: ['', Validators.required],
-    })
+  constructor(private fb: FormBuilder, private validatorService: ValidatorServiceService, private emailValidator:EmailValidator) {
+    this.myform = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern(this.validatorService.firstNameAndLastnamePattern)]],
+      // email: ['', [Validators.required, Validators.pattern(this.validatorService.emailPattern)], [new EmailValidator()]],
+      email: ['', [Validators.required, Validators.pattern(this.validatorService.emailPattern)], [this.emailValidator]],
+      username: ['', [Validators.required, this.validatorService.cantBeStrider]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      password2: ['', Validators.required],
+    },{
+      validators:[this.validatorService.isFieldOneEqualToFieldTwo('password','password2')]
+    });
+  }
 
 
-    isValidField(field: string) {
-      //TODO obtenner de un servicio
-    }
+  isValidField(field: string): boolean | null {
+    return this.validatorService.isValidField(this.myform, field);
+  }
 
-    onSubmit(){
-      if(this.myform.invalid){
-        this.myform.markAllAsTouched();
-        return;
-      }
-      console.log(this.myform.value);
-    }
+
+  onSubmit() {
+    this.myform.markAllAsTouched();
+  }
 }

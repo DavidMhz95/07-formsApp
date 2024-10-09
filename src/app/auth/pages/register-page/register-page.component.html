@@ -2,110 +2,95 @@
 <hr>
 
 <div class="row">
-    <div class="col">
+  <div class="col">
 
-        <form [formGroup]="myform" (ngSubmit)="onSubmit()" autocomplete="off">
+    <form [formGroup]="myform" (ngSubmit)="onSubmit()" autocomplete="off">
 
-            <!-- Nombre -->
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Name</label>
-                <div class="col-sm-9">
-                    <input type="text"
-                           class="form-control"
-                           formControlName="name"
-                           placeholder="Name">
+      <!-- Nombre -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" formControlName="name" placeholder="Name">
 
-                    <span class="form-text text-danger">
-                        Debe de ser en formato de nombre y apellido
-                    </span>
-                </div>
-            </div>
+          <span *ngIf="isValidField('name')" class="form-text text-danger">
+            Debe de ser en formato de nombre y apellido
+          </span>
+        </div>
+      </div>
 
-            <!-- Email -->
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Email</label>
-                <div class="col-sm-9">
-                    <input type="email"
-                           class="form-control"
-                           formControlName="email"
-                           placeholder="User email">
-                    <span class="form-text text-danger">
-                        mensaje de error del email
-                    </span>
-                </div>
-            </div>
+      <!-- Email -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
+          <input type="email" class="form-control" formControlName="email" placeholder="User email">
+          <span *ngIf="isValidField('email')" class="form-text text-danger">
+            mensaje de error del email
+          </span>
+        </div>
+      </div>
 
-            <!-- Username -->
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Username</label>
-                <div class="col-sm-9">
-                    <input type="text"
-                           class="form-control"
-                            formControlName="username"
-                           placeholder="User nickname">
-                    <span class="form-text text-danger">
-                         El username no puede ser Strider
-                    </span>
-                </div>
-            </div>
+      <!-- Username -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Username</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" formControlName="username" placeholder="User nickname">
+          <span  *ngIf="isValidField('username')" class="form-text text-danger">
+            El username no puede ser Strider
+          </span>
+        </div>
+      </div>
 
-            <!-- Password -->
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Password</label>
-                <div class="col-sm-9">
-                    <input type="password"
-                           class="form-control"
-                            formControlName="password"
-                           placeholder="Account password">
+      <!-- Password -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Password</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" formControlName="password" placeholder="Account password">
 
-                    <span class="form-text text-danger">
-                         La contraseña debe de ser mayor de 6 caracteres.
-                    </span>
-                </div>
-            </div>
+          <span  *ngIf="isValidField('password')" class="form-text text-danger">
+            La contraseña debe de ser mayor de 6 caracteres.
+          </span>
+        </div>
+      </div>
 
-            <!-- Password2 -->
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Confirm</label>
-                <div class="col-sm-9">
-                    <input type="password"
-                           class="form-control"
-                            formControlName="password2"
-                           placeholder="Confirm password">
+      <!-- Password2 -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Confirm</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" formControlName="password2" placeholder="Confirm password">
 
-                    <span class="form-text text-danger">
-                         Las contraseñas deben de ser iguales
-                    </span>
-                </div>
-            </div>
+          <span  *ngIf="isValidField('password2')" class="form-text text-danger">
+            Las contraseñas deben de ser iguales
+          </span>
+        </div>
+      </div>
 
 
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-primary float-end"
-                            type="submit">
-                        Crear
-                    </button>
-                </div>
-            </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary float-end" type="submit">
+            Crear
+          </button>
+        </div>
+      </div>
 
 
-        </form>
-    </div>
+    </form>
+  </div>
 </div>
 
 
 <h2>Form Valid: {{myform.valid}} </h2>
 <h2>Form Status: {{myform.status}} </h2>
 <h2>Form Pending: {{myform.pending}} </h2>
+<h2>Form Touched: {{myform.touched}} </h2>
 <h2>Form errors</h2>
 <pre>{{ myform.errors| json }}</pre>
 
 <h5>Nombre</h5>
-<pre>{{ myform.value.name | json }}</pre>
+<pre>{{ myform.controls['name'].errors | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ myform.value.email| json }}</pre>
+<pre>{{ myform.controls['email'].errors | json }}</pre>
 
 <h5>Username</h5>
 <pre>{{ myform.controls['username'].errors | json }}</pre>
@@ -115,4 +100,4 @@
 <pre>{{ myform.value.password | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ myform.value.password2 | json }}</pre>
+<pre>{{  myform.controls['password2'].errors  | json }}</pre>
